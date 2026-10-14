@@ -1,0 +1,33 @@
+PEMBUNGKUS INSTAL SIMBUNG (PWA)
+==================================================
+Isi folder: index.html, manifest.webmanifest, sw.js, ikon (icon-192, icon-512, icon-maskable-512, apple-touch-icon)
+
+1) ISI ALAMAT APLIKASI
+   Buka index.html, cari baris:  var URL_APLIKASI = "GANTI_DENGAN_URL_EXEC";
+   Ganti dengan alamat web app Apps Script Anda (Deploy > Manage deployments > Web app URL, berakhiran /exec).
+
+2) UNGGAH KE GITHUB PAGES (gratis, alamat https://NAMAANDA.github.io/simbung/)
+   a. Daftar di github.com, lalu buat repository publik bernama: simbung
+   b. Add file > Upload files, seret ISI folder ini (semua file, BUKAN foldernya) sehingga file berada di akar repository.
+      Klik "Commit changes".
+   c. Settings > Pages > Build and deployment > Source: "Deploy from a branch", Branch: main, folder: / (root), Save.
+   d. Tunggu 1-3 menit, muat ulang halaman Pages sampai muncul "Your site is live at ...".
+   Alamat yang lebih rapi: buat Organization GitHub (gratis) bernama simbung dan repository bernama
+   simbung.github.io, maka alamatnya menjadi https://simbung.github.io
+   (Alternatif hosting lain: Netlify Drop - seret folder ke app.netlify.com/drop.)
+
+3) PASANG DI HP
+   Buka alamat situs di Chrome (BUKAN alamat script.google.com), lalu menu titik tiga > "Instal aplikasi".
+
+4) UJI WAJIB sebelum dibagikan ke petugas (di aplikasi yang sudah terinstal):
+   - login, isi formulir, ambil lokasi (GPS), dan ambil/unggah foto
+   - kirim laporan
+   Bila GPS atau kamera tidak berfungsi, ubah  var MODE = "iframe";  menjadi  var MODE = "redirect";
+   lalu simpan ulang index.html di GitHub (ikon pensil > Commit changes).
+
+5) MENGUBAH ALAMAT /exec DI KEMUDIAN HARI
+   Edit index.html di GitHub (ikon pensil), ganti URL_APLIKASI, Commit changes. Tunggu 1-2 menit; HP petugas
+   mengambil versi terbaru otomatis saat aplikasi dibuka dengan internet. Tidak perlu memasang ulang.
+
+Catatan: aplikasi tetap butuh internet untuk dibuka. Repository GitHub Pages gratis bersifat publik; isinya hanya
+alamat web app (bukan rahasia) - jangan menaruh kode akses atau data apa pun di repository ini.

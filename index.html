@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SIMBUNG</title>
+<meta name="theme-color" content="#123a78">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SIMBUNG">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  html, body { height: 100%; margin: 0; background: #123a78; font-family: system-ui, sans-serif; }
+  iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: #123a78; }
+  #info { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; padding: 24px; color: #fff; text-align: center; line-height: 1.5; }
+  #info div { max-width: 360px; }
+  #info code { background: rgba(255,255,255,.16); padding: 2px 6px; border-radius: 6px; }
+  #buka { position: fixed; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); display: none; z-index: 5;
+          background: #fff; color: #123a78; font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 999px; text-decoration: none;
+          box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+</style>
+</head>
+<body>
+<iframe id="app" title="SIMBUNG" allow="geolocation; camera; microphone; clipboard-write; fullscreen"></iframe>
+<div id="info"><div>
+  <h2>SIMBUNG belum diatur</h2>
+  <p>Buka file <code>index.html</code> pembungkus ini, lalu isi <code>URL_APLIKASI</code> dengan alamat web app Apps Script (berakhiran <code>/exec</code>).</p>
+</div></div>
+<a id="buka" href="#" target="_top" rel="noopener">Tidak muncul? Buka langsung</a>
+
+<script>
+  /* ===== PENGATURAN: isi dengan alamat web app Apps Script Anda (yang berakhiran /exec) ===== */
+  var URL_APLIKASI = "https://script.google.com/macros/s/AKfycbyVjHX1rCA5DJk9ZWH9CCwmlm7I1XbszCgF1KrXftzbZP6KGVL3ghjVBPaVTnw7-yLcVQ/exec";
+
+  /* "iframe"   : aplikasi tampil di dalam jendela aplikasi terinstal (tampilan paling mirip aplikasi).
+     "redirect" : aplikasi dibuka langsung dari alamat Apps Script (paling kompatibel untuk GPS/kamera,
+                  tapi Chrome bisa menampilkan bilah alamat kecil di atas). */
+  var MODE = "iframe";
+  /* ======================================================================================== */
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+  }
+
+  var tersedia = URL_APLIKASI && URL_APLIKASI.indexOf("script.google.com") !== -1;
+  if (!tersedia) {
+    document.getElementById("app").style.display = "none";
+    document.getElementById("info").style.display = "flex";
+  } else if (MODE === "redirect") {
+    location.replace(URL_APLIKASI);
+  } else {
+    var f = document.getElementById("app"), b = document.getElementById("buka"), termuat = false;
+    b.href = URL_APLIKASI;
+    f.addEventListener("load", function () { termuat = true; });
+    f.src = URL_APLIKASI;
+    setTimeout(function () { if (!termuat) b.style.display = "block"; }, 15000);   // jaga-jaga bila gagal dimuat
+  }
+</script>
+</body>
+</html>
